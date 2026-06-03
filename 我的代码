@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	string s;
+	int n, k;
+	cin >> s >> n >> k;
+
+	vector<string> e(n);
+	vector<int> m(n);
+	vector<string> ep(n);
+	int first;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> e[i] >> m[i] >> ep[i];
+		if (e[i] == s) first = i;
+	}
+	vector<string> ee(n);
+	vector<int> mm(n);
+	vector<string> epp(n);
+	ee[0] = e[first];
+	mm[0] = m[first];
+	epp[0] = ep[first];
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (e[j]==epp[i])
+			{
+				mm[i + 1] = m[j];
+				ee[i + 1] = epp[i];
+				epp[i + 1] = ep[j];
+				break;
+			}
+		}
+	}
+	bool fst = true;
+	for (int i = 0; i < n; i++)
+	{
+		if (mm[i] < 0 && fst) {
+			cout << ee[i] << ' ' << mm[i];
+			fst = false;
+		}
+		else if (mm[i] < 0) {
+			cout << ' ' << ee[i] << endl << ee[i] << ' ' << mm[i];
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		if (mm[i] >= 0 && mm[i] <= k) {
+			cout << ' ' << ee[i] << endl << ee[i] << ' ' << mm[i];
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		if (mm[i] >= 0 && mm[i] > k) {
+			cout << ' ' << ee[i] << endl << ee[i] << ' ' << mm[i];
+		}
+	}
+	cout << ' ' << epp[n - 1] << endl;
+	return 0;
+}
